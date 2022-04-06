@@ -1,22 +1,34 @@
 class HomeController < ApplicationController
+  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
 
   def index
     Rails.logger.debug(User.column_names)
-    if session.key?(:userEmail) and session.key?(:userType) and session.key?(:userName)
-      session_redirect
-    end
+    # if session.key?(:userEmail) and session.key?(:userType) and session.key?(:userName)
+    #   session_redirect
+    # end
     
-    if params.key?(:email) and params.key?(:password)
-      if correct_user?(params)
-      currentUser = User.find_by(:email => params[:email], :password => params[:password])
-      session[:userEmail] = params[:email]
-      session[:userType] = currentUser.userType
-      session[:userName] = currentUser.name
-      session_redirect
-      else
-        render json: {comment: "User not found!"}, status: 400
+    # Rails.logger.debug(params)
+    Rails.logger.debug(request.params[:params])
+    
+    if request.params.key?(:params)
+      params = request.params[:params]
+      
+      if params.key?(:email) and params.key?(:password)
+        Rails.logger.debug("HERE")
+        if correct_user?(params)
+          currentUser = User.find_by(:email => params[:email], :password => params[:password])
+          session[:userEmail] = params[:email]
+          session[:userType] = currentUser.userType
+          session[:userName] = currentUser.name
+          session_redirect
+        else
+          render json: {comment: "User not found!"}, status: 400
+        end
       end
     end
+    
+    
     
   end
   

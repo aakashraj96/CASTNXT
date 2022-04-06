@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Header from '../Navbar/Header';
+import UserEvents from './UserEvents'
 
 class UserHomepage extends Component {
     constructor(props) {
@@ -17,8 +18,12 @@ class UserHomepage extends Component {
                     <Header />
                 </div>
                 
-                <div style={{marginTop: '3%', backgroundColor: 'white'}}>
+                <div className="user-homepage">
                     <h1>User Homepage</h1>
+                </div>
+                
+                <div>
+                    <UserEvents />
                 </div>
             </div>
         )

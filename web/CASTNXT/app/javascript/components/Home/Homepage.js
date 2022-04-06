@@ -26,6 +26,7 @@ class Homepage extends Component {
             nameError: false,
             emailError: false,
             passwordError: false,
+            loginError: false,
             passwordErrorText: "",
             tabValue: 0,
             redirect: "",
@@ -83,23 +84,22 @@ class Homepage extends Component {
                 emailError: false,
                 signUpConfirm: true
             })
+            
+            let name = this.state.name
+            let email = this.state.email
+            let password = this.state.password
+            let role = this.state.role
+            
             //Make API call
-        }
-    }
-
-    login = () => {
-        let email = this.state.loginPassword
-        let password = this.state.loginPassword
-        
-        axios.get("?", {
-              params: {
+            axios.post("/home/signup", {
+                name: name,
                 email: email,
-                password: password
-              }
+                password: password,
+                type: role
             })
             .then((res) => {
                 console.log("Success", res)
-                let role = res.data.role
+                let role = res.data.userType
                 
                 this.setState({
                     redirect: role
@@ -107,6 +107,35 @@ class Homepage extends Component {
             })
             .catch((err) => {
                 console.log(err)
+            })
+        }
+    }
+
+    login = () => {
+        let email = this.state.loginEmail
+        let password = this.state.loginPassword
+        
+        axios.post("/home/login", {
+              params: {
+                email: email,
+                password: password
+              }
+            })
+            .then((res) => {
+                console.log("Success", res)
+                let role = res.data.userType
+                
+                this.setState({
+                    redirect: role,
+                    loginError: false
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+                
+                this.setState({
+                    loginError: true
+                })
             })
     }
 
@@ -154,6 +183,12 @@ class Homepage extends Component {
                                     <TextField focused style={{ width: '60%' }} name="loginPassword" 
                                         type="password" label="Password" value={this.state.loginPassword} onChange={this.handleChange} /><br /><br />
                                     <Button variant="contained" onClick={this.login}>Login</Button>
+                                    {this.state.loginError && 
+                                        <div>
+                                            <br />
+                                            <span style={{color: 'red'}}>An Error occured while logging in.</span>
+                                        </div>
+                                    }
                                 </div>
                             }
 

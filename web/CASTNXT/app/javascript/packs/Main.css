@@ -11,8 +11,6 @@
 .App {
   text-align: center;
   background-image: url('../assets/images/background.png');
-  width: 100vw;
-  min-height: 100vh;
 }
 
 .App-logo {
@@ -28,7 +26,6 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,18 +43,54 @@
   text-align: center;
 }
 
-.talent-homepage-style {
-  background-color: gray;
-  height: 80vh;
-  width: 80vw;
-  padding-top: 1%;
-}
-
-.border {
-  border: 1px solid black;
-  border-radius: 10px;
-}
-
 background-style {
   background-color: #FFFFFF;
+}
+
+/* Center tables for demo */
+table {
+  margin: 0 auto;
+}
+
+/* Default Table Style */
+table {
+  color: #333;
+  background: white;
+  border: 1px solid grey;
+  font-size: 12pt;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+table thead th,
+table tfoot th {
+  color: #777;
+  background: rgba(0,0,0,.1);
+  white-space: nowrap;
+}
+table caption {
+  padding:.5em;
+}
+table th,
+table td {
+  padding: .5em;
+  border: 1px solid lightgrey;
+  white-space: nowrap;
+}
+
+body {
+  overflow: auto;
+}
+
+.user-homepage {
+  margin-top: 3.5%;
+  background-color: white;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.user-events {
+  padding-top: 1%;
+  background-color: white;
+  height: 80vh;
+  width: 60vw;
 }
