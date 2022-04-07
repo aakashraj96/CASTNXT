@@ -8,7 +8,9 @@ import {
 
 import Homepage from '../components/Home/Homepage';
 import UserHomepage from '../components/User/UserHomepage';
+import UserEventRegister from '../components/User/UserEventRegister';
 import AdminHomepage from '../components/Admin/AdminHomepage';
+import AdminCreateEvent from '../components/Admin/AdminCreateEvent';
 import ClientHomepage from '../components/Client/ClientHomepage';
 
 class Main extends Component {
@@ -27,8 +29,10 @@ class Main extends Component {
             <Router>
               <Switch>
                 <Route exact path="/" render= {() => <Homepage />} />
+                <Route exact path="/user/event" render= {() => <UserEventRegister />} />
                 <Route exact path="/user" render= {() => <UserHomepage />} />
                 <Route exact path="/admin" render= {() => <AdminHomepage />} />
+                <Route exact path="/admin/create-event" render= {() => <AdminCreateEvent />} />
                 <Route exact path="/client" render= {() => <ClientHomepage />} />
                 <Redirect from="/" to="/login" />
               </Switch>
