@@ -4,6 +4,24 @@ import {FormBuilder} from '@ginkgo-bioworks/react-json-schema-form-builder';
 import Form from '@rjsf/core';
 import './Forms.css';
 
+const customFormInputs = {
+  array: {
+    displayName: "File",
+    matchIf: [
+      {
+        types: ["string"],
+        widget: "file"
+      },
+    ],
+    defaultDataSchema: {},
+    defaultUiSchema: {
+      "ui:widget": "file"
+    },
+    type: "string",
+    format: "data-url",
+  },
+};
+
 class FormBuilderContainer extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +45,11 @@ class FormBuilderContainer extends Component {
                 uischema: newUiSchema
               })
             }}
+            mods={
+              {
+                customFormInputs
+              }
+            }
           />
           </div>
           <div className="form-preview">
