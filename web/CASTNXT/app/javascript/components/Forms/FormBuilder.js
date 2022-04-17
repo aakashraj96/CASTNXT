@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {FormBuilder} from '@ginkgo-bioworks/react-json-schema-form-builder';
 import Form from '@rjsf/core';
+import Slide from './Slide.js';
 import './Forms.css';
 
 const customFormInputs = {
@@ -31,6 +32,16 @@ class FormBuilderContainer extends Component {
       formData: {}
     };
   }
+  
+  onFormDataChange = (newFormData) => {
+      this.setState((prevState) => {
+          return {
+              ...prevState,
+              formData: newFormData.formData
+          }
+      })
+  }
+  
   render() {
     console.log(this.state)
     return (
@@ -54,17 +65,11 @@ class FormBuilderContainer extends Component {
           </div>
           <div className="form-preview">
                 <p className="preview-title">Form preview: </p>
-              <Form
+                <Slide
                   schema={JSON.parse(this.state.schema)}
                   uiSchema={JSON.parse(this.state.uischema)}
-                  onChange={(newFormData) => this.setState((prevState) => {
-                      return {
-                          ...prevState,
-                          formData: newFormData.formData
-                      }
-                  })}
                   formData={this.state.formData}
-                  submitButtonMessage={"Submit"}
+                  onFormDataChange={this.onFormDataChange}
                 />
             </div>
         </div>
