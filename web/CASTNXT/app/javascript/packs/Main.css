@@ -11,6 +11,8 @@
 .App {
   text-align: center;
   background-image: url('../assets/images/background.png');
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .App-logo {
@@ -79,13 +81,6 @@ table td {
 
 body {
   overflow: auto;
-}
-
-.user-homepage {
-  margin-top: 3.5%;
-  background-color: white;
-  padding-top: 2px;
-  padding-bottom: 2px;
 }
 
 .user-events {

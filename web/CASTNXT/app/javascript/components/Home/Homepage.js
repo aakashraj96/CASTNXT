@@ -8,7 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import axios from 'axios'
+import axios from 'axios';
 
 class Homepage extends Component {
     constructor(props) {
@@ -140,7 +140,7 @@ class Homepage extends Component {
             <div>
                 <div className="container">
                     <div style={imageStyle} className='centered'>
-                        <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '20vw', height: '5vh' }} />
+                        <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '300px', height: '30px' }} />
                     </div>
                     <div className="row" style={{ color: 'white' }}>
                         <div className="col-md-6 offset-md-3 login-box">

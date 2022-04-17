@@ -7,93 +7,79 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
-import { Redirect } from 'react-router-dom';
-import './Admin.css';
+import axios from 'axios';
 
 class AdminHomepage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            redirect: "",
+            tableData: properties.tableData
         }
     }
     
+    renderEventList() {
+        const { tableData } = this.state
+        let rows = []
+        if (!tableData.length) {
+            rows.push(
+                 <TableRow key={0}>
+                    <TableCell colSpan={2} align="center">
+                        No ongoing Events right now.
+                    </TableCell>
+                 </TableRow>
+            )
+        } else {
+            tableData.map((event, i) => {
+                rows.push(
+                    <TableRow key={i}>
+                        <TableCell>
+                            <b><Link to={{
+                                pathname: "/admin/event/" + event.eventId
+                            }}>{event.event}</Link></b>
+                        </TableCell>
+                        <TableCell>{event.status}</TableCell>
+                    </TableRow>
+                )
+            });
+        } 
+        return rows;
+    }
+    
     createEventRedirection = () => {
-        this.setState({
-            redirect: 'admin/create-event'
-        })
+        window.location.href = 'admin/create-event'
     }
 
     render() {
-        if(this.state.redirect === "admin/create-event") {
-            return <Redirect to='/admin/create-event'/>;
-        }
-        
-        
-        let borderstyle = {
-            border: '1px solid black',
-            borderTopRightRadius: '5px',
-            borderTopLeftRadius: '5px'
-        }
-        
-        let adminHomepageStyle = {
-            marginTop: '3%',
-            backgroundColor: 'white',
-            height: '100vh',
-            paddingTop: '1%',
-            paddingBottom: '5%',
-            overflowY: 'scroll'
-        }
-        
         return(
             <div>
                 <div>
                     <Header />
                 </div>
                 
-                <div style={adminHomepageStyle}>
-                    <h1>Admin Homepage</h1>
-                    
-
-                    <div className="container" style={{ backgroundColor: 'white', height: '100%', width: '50vw', paddingTop: '1%' }}>
-                        
-                        <div style={{ color: 'white' }}>
-                            <Tabs variant="fullWidth" value={this.state.tabValue} onChange={this.handleTabChange} centered>
-                                <Tab style={borderstyle} label="Performers" />
-                                <Tab style={borderstyle} label="Forms" />
-                                <Tab style={borderstyle} label="Stacks" />
-                                <Tab style={borderstyle} label="Curated" />
-                                <Tab style={borderstyle} label="Final List" />
-                            </Tabs>
-                            <br />
-                        </div>
-    
-                        <br />
-                        <p>Use this page to sign up for events and check to see if you've been selected for an event</p>
-                        <div style={{margin: 20}}>
-                            <Button variant="contained" onClick={this.createEventRedirection}>Create New Form</Button>
+                <div>
+                    <div className="container user-events">
+                        <div className="row">
+                            <h1> FashioNXT Events </h1>
                         </div>
                         <div className="row">
-                            <div className="col-md-10 offset-md-1">
+                            <div style={{marginBottom: 20}}>
+                                <Button variant="contained" onClick={this.createEventRedirection}>Create New Event</Button>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6 offset-md-3">
                                 <TableContainer component={Paper}>
                                     <Table aria-label="simple table">
                                         <TableHead style={{ backgroundColor: '#3498DB' }}>
                                             <TableRow>
                                                 <TableCell align="center">Event</TableCell>
-                                                <TableCell>Form Link</TableCell>
-                                                <TableCell>Status</TableCell>
+                                                <TableCell align="center">Status</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            <TableRow>
-                                                <TableCell align="center">Test</TableCell>
-                                                <TableCell>Link</TableCell>
-                                                <TableCell>Pending</TableCell>
-                                            </TableRow>
+                                            {this.renderEventList()}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
 
@@ -43,7 +44,8 @@ export default function Header(props) {
                         </IconButton>
                         <Typography variant="h6" className={classes.title}></Typography>
                         <Typography color="inherit" style={{marginRight: '1%'}}>Welcome, {properties.name}</Typography>
-                        <Typography><button onClick={logoutUser}>Logout</button></Typography>
+                        <Typography><Button variant="contained" onClick={logoutUser}>Logout</Button></Typography>
+                        
                     </Toolbar>
                 </AppBar>
             </header>
