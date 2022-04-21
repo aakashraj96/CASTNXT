@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
     protect_from_forgery with: :null_session
     skip_before_action :verify_authenticity_token
     
-    def authenticate_user!(userType)
+    def authenticate_user! userType
         unless is_user_logged_in? and userType==session[:userType]
             redirect_to '/'
         end
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
         return flag
     end
     
+    # GET /logout
     def logout
         reset_session
         render json: {redirect_path: '/'}, status: 200

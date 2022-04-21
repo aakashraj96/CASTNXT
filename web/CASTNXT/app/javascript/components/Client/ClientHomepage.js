@@ -35,7 +35,7 @@ class ClientHomepage extends Component {
                     <TableRow key={i}>
                         <TableCell>
                             <b><Link to={{
-                                pathname: "/client/event/" + event.eventId
+                                pathname: "/client/events/" + event.eventId
                             }}>{event.event}</Link></b>
                         </TableCell>
                     </TableRow>

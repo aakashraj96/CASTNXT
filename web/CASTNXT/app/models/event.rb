@@ -8,4 +8,6 @@ class Event
   has_many :slides
   
   field :status, type: String
+  field :title, type: String
+  field :description, type: String
 end

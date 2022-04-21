@@ -3,7 +3,7 @@ class Submission
   include Mongoid::Timestamps
   
   belongs_to :talent
-  embedded_in :slide
+  belongs_to :slide
   has_many :media
   
   field :data, type: String

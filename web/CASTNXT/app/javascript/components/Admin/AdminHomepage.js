@@ -37,7 +37,7 @@ class AdminHomepage extends Component {
                     <TableRow key={i}>
                         <TableCell>
                             <b><Link to={{
-                                pathname: "/admin/event/" + event.eventId
+                                pathname: "/admin/events/" + event.eventId
                             }}>{event.event}</Link></b>
                         </TableCell>
                         <TableCell>{event.status}</TableCell>
@@ -49,7 +49,7 @@ class AdminHomepage extends Component {
     }
     
     createEventRedirection = () => {
-        window.location.href = 'admin/create-event'
+        window.location.href = 'admin/events/new'
     }
 
     render() {

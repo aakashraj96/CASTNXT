@@ -1,22 +1,27 @@
 class AdminController < ApplicationController
+  # GET /admin
   def index
     authenticate_user!('admin')
     
     tableData = []
-    forms = Form.all
-    forms.each do |form|
-      event = Event.find_by(:_id => form.event_id)
-      formData = JSON.parse(form.data)
+
+    eventIds = Producer.find_by(:_id => session[:userId]).event_ids
+    eventIds.each do |eventId|
+      event = Event.find_by(:_id => eventId)
       object = {
-        event: formData['schema']['title'],
-        eventId: form.event_id,
+        id: eventId,
+        title: event.title,
         status: event.status
       }
-      form.event_id
-        
+      
       tableData << object
     end
-    
     @properties = {name: session[:userName], tableData: tableData}
+  end
+  
+  private
+  
+  def get_event eventId
+    return Event.find_by(:_id => eventId)
   end
 end

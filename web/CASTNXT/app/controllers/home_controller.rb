@@ -1,10 +1,12 @@
 class HomeController < ApplicationController
+  # GET /
   def index
     if session.key?(:userEmail) and session.key?(:userType) and session.key?(:userName)
       redirect_to get_redirect_path
     end
   end
   
+  # POST /home/signup
   def signup
     if new_user?(params[:email])
       create_user(params)
@@ -12,20 +14,21 @@ class HomeController < ApplicationController
       session[:userEmail] = currentUser.email
       session[:userType] = currentUser.user_type
       session[:userName] = currentUser.name
-      session[:userId] = currentUser._id
+      session[:userId] = currentUser._id.to_str
       render json: {redirect_path: get_redirect_path}, status: 200
     else
       render json: {comment: "Email already exists!"}, status: 400
     end
   end
   
+  # POST /home/login
   def login
     if correct_user?(params)
       currentUser = get_user(params[:email], params[:password])
       session[:userEmail] = currentUser.email
       session[:userType] = currentUser.user_type
       session[:userName] = currentUser.name
-      session[:userId] = currentUser._id
+      session[:userId] = currentUser._id.to_str
       render json: {redirect_path: get_redirect_path}, status: 200
     else
       render json: {comment: "User not found!"}, status: 400
@@ -57,9 +60,11 @@ class HomeController < ApplicationController
   def create_user params
     user = Auth.create(name:params[:name], email:params[:email], password:params[:password], user_type:params[:type])
     if params[:type] == 'admin'
-      Producer.create(_id:user._id, name:user.name, email:user.email)
+      Producer.create(_id:user._id.to_str, name:user.name, email:user.email)
     elsif params[:type] == 'client'
-      Client.create(_id:user._id, name:user.name, email:user.email)
+      Client.create(_id:user._id.to_str, name:user.name, email:user.email)
+    else
+      User.create(_id:user._id.to_str, name:user.name, email:user.email)
     end
   end
 
