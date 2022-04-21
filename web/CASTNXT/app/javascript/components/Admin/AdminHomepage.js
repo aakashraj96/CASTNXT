@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class AdminHomepage extends Component {
     constructor(props) {
@@ -65,7 +66,11 @@ class AdminHomepage extends Component {
                         </div>
                         <div className="row">
                             <div style={{marginBottom: 20}}>
-                                <Button variant="contained" onClick={this.createEventRedirection}>Create New Event</Button>
+                                <Link to={{
+                                    pathname: "admin/create-event"
+                                }}>
+                                    <Button variant="contained">Create New Event</Button>
+                                </Link>
                             </div>
                         </div>
                         <div className="row">

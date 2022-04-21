@@ -26,20 +26,6 @@ const customFormInputs = {
 class FormBuilderContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      schema: '{}',
-      uischema: '{}',
-      formData: {}
-    };
-  }
-  
-  onFormDataChange = (newFormData) => {
-      this.setState((prevState) => {
-          return {
-              ...prevState,
-              formData: newFormData.formData
-          }
-      })
   }
   
   render() {
@@ -48,13 +34,11 @@ class FormBuilderContainer extends Component {
         <div className="container" style={{ backgroundColor: 'white', height: '100%'}}>
         <div>
           <FormBuilder
-            schema={this.state.schema}
-            uischema={this.state.uischema}
+            schema={this.props.schema}
+            uischema={this.props.uischema}
             onChange={(newSchema, newUiSchema) => {
-              this.setState({
-                schema: newSchema,
-                uischema: newUiSchema
-              })
+              this.props.onSchemaChange(newSchema)
+              this.props.onUISchemaChange(newUiSchema)
             }}
             mods={
               {
@@ -66,10 +50,10 @@ class FormBuilderContainer extends Component {
           <div className="form-preview">
                 <p className="preview-title">Form preview: </p>
                 <Slide
-                  schema={JSON.parse(this.state.schema)}
-                  uiSchema={JSON.parse(this.state.uischema)}
-                  formData={this.state.formData}
-                  onFormDataChange={this.onFormDataChange}
+                  schema={JSON.parse(this.props.schema)}
+                  uiSchema={JSON.parse(this.props.uischema)}
+                  formData={this.props.formData}
+                  onFormDataChange={this.props.onFormDataChange}
                 />
             </div>
         </div>
