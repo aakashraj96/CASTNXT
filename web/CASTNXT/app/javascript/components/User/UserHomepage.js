@@ -45,9 +45,7 @@ class UserHomepage extends Component {
                 rows.push(
                     <TableRow key={i}>
                         <TableCell>
-                            <b><Link to={{
-                                pathname: "/user/events/" + event.eventId
-                            }}>{event.event}</Link></b>
+                            <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                         </TableCell>
                     </TableRow>
                 )
@@ -74,9 +72,7 @@ class UserHomepage extends Component {
                     rows.push(
                         <TableRow key={i}>
                             <TableCell>
-                                <b><Link to={{
-                                    pathname: "/user/events/" + event.eventId
-                                }}>{event.event}</Link></b>
+                                <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                             </TableCell>
                             <TableCell>
                                 {event.status}

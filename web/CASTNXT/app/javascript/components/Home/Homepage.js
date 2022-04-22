@@ -181,9 +181,9 @@ class Homepage extends Component {
                                                 onChange={this.handleChange}
                                                 style={{textAlign: 'center'}}
                                             >
-                                                <FormControlLabel value="user" control={<Radio />} label="User" />
-                                                <FormControlLabel value="admin" control={<Radio />} label="Admin" />
-                                                <FormControlLabel value="client" control={<Radio />} label="Client" />
+                                                <FormControlLabel value="USER" control={<Radio />} label="User" />
+                                                <FormControlLabel value="ADMIN" control={<Radio />} label="Admin" />
+                                                <FormControlLabel value="CLIENT" control={<Radio />} label="Client" />
                                             </RadioGroup>
                                         </div>
                                         <br />

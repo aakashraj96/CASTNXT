@@ -1,15 +1,14 @@
 class AdminController < ApplicationController
   # GET /admin
   def index
-    authenticate_user!('admin')
+    authenticate_user!('ADMIN')
     
     tableData = []
 
-    eventIds = Producer.find_by(:_id => session[:userId]).event_ids
-    eventIds.each do |eventId|
-      event = Event.find_by(:_id => eventId)
+    events = Event.all
+    events.each do |event|
       object = {
-        id: eventId,
+        id: event._id.to_str,
         title: event.title,
         status: event.status
       }
@@ -17,11 +16,5 @@ class AdminController < ApplicationController
       tableData << object
     end
     @properties = {name: session[:userName], tableData: tableData}
-  end
-  
-  private
-  
-  def get_event eventId
-    return Event.find_by(:_id => eventId)
   end
 end

@@ -1,25 +1,23 @@
 class UserController < ApplicationController
   # GET /user
   def index
-    authenticate_user!('user')
+    authenticate_user!('USER')
     
     acceptingTableData = []
     submittedTableData = []
     
-    forms = Form.all
-    forms.each do |form|
+    events = Event.all
+    events.each do |event|
       submittedFlag = 0
-      event = get_event(form.event_id)
-      slides = get_slides(form.event_id)
+      slides = get_slides(event._id.to_str)
       
-      formData = JSON.parse(form.data)
       object = {
-        event: formData['schema']['title'],
-        eventId: form.event_id
+        title: event.title,
+        id: event._id.to_str
       }
       
       slides.each do |slide|
-        if slide.submission.talent_id == session[:userId]
+        if slide.submission.talent_id.to_str.casecmp? session[:userId]
           submittedFlag = 1
           object["status"] = slide.submission.status
           break
@@ -27,11 +25,11 @@ class UserController < ApplicationController
       end
       
       if submittedFlag == 0
-        if event.status == 'ACCEPTING'
+        if "ACCEPTING".casecmp? event.status
           acceptingTableData << object
         end
       else
-        if event.status == 'ACCEPTING'
+        if "ACCEPTING".casecmp? event.status
           object["accepting"] = true
         end
         
@@ -42,10 +40,6 @@ class UserController < ApplicationController
   end
   
   private
-  
-  def get_event eventId
-    return Event.find_by(:_id => eventId)
-  end
   
   def get_slides eventId
     return Slide.where(:event_id => eventId)

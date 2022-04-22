@@ -1,22 +1,20 @@
 class ClientController < ApplicationController
   # GET /client
   def index
-    authenticate_user!('client')
+    authenticate_user!('CLIENT')
     
     tableData = []
-    forms = Form.all
-    forms.each do |form|
-      event = get_event(form.event_id)
-      if event.client_ids.include? session[:userId]
-        formData = JSON.parse(form.data)
+    
+    eventIds = get_client_events(session[:userId])
+    eventIds.each do |eventId|
+      event = get_event(eventId)
         
-        object = {
-          event: formData['schema']['title'],
-          eventId: form.event_id
-        }
-          
-        tableData << object
-      end
+      object = {
+        title: event.title,
+        id: event._id.to_str
+      }
+        
+      tableData << object
     end
     
     @properties = {name: session[:userName], tableData: tableData}
@@ -26,5 +24,9 @@ class ClientController < ApplicationController
   
   def get_event eventId
     return Event.find_by(:_id => eventId)
+  end
+  
+  def get_client_events clientId
+    return Client.find_by(:_id => clientId).event_ids
   end
 end

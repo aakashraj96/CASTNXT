@@ -3,13 +3,13 @@ class ApplicationController < ActionController::Base
     skip_before_action :verify_authenticity_token
     
     def authenticate_user! userType
-        unless is_user_logged_in? and userType==session[:userType]
+        unless is_user_logged_in?(userType)
             redirect_to '/'
         end
     end
     
-    def is_user_logged_in?
-        flag = session.key?(:userEmail) and session.key?(:userType) and session.key?(:userName)
+    def is_user_logged_in? userType
+        flag = session.key?(:userEmail) and session.key?(:userType) and session.key?(:userName) and userType.casecmp? session[:userType]
         return flag
     end
     
