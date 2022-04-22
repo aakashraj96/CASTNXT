@@ -20,7 +20,8 @@ class FormsController < ApplicationController
 
   # POST /forms or /forms.json
   def create
-    Form.create(producer_id:params[:producer_id], data:params[:data])
+    @form = Form.create(producer_id:params[:producer_id], data:params[:data])
+    render json: {formId:  @form._id.to_str}, status: 201
   end
 
   # DELETE /forms/1 or /forms/1.json

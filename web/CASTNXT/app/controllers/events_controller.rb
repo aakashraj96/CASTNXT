@@ -5,6 +5,7 @@ class EventsController < ApplicationController
     if is_user_logged_in?
       if "ADMIN".casecmp? session[:userType]
         tableData = []
+        
         eventIds = Producer.find_by(:_id => session[:userId]).event_ids
         eventIds.each do |eventId|
           event = Event.find_by(:_id => eventId)
@@ -66,23 +67,25 @@ class EventsController < ApplicationController
   def create
     # only admin allowed to create a new event
     if is_user_logged_in?('ADMIN')
-      @event = Event.new(event_params)
+      Rails.logger.debug('event_params')
+      Rails.logger.debug(event_params)
+      @event = Event.new(form_id:params[:form_id], producer_id:params[:producer_id], client_ids:params[:client_ids], status:params[:status], title:params[:title], description:params[:description])
       if @event.save
-        # add event to producer
-        @producer = Producer.find_by(:_id => params[:producer_id])
-        @producer.eventIds << @event._id.to_str
-        @producer.save
         
-        # add event to client
-        params[:client_ids].each do |clientId|
-          @client = Client.find_by(:_id => clientId)
-          @client.eventIds << @event._id.to_str
-          @client.save
-        end
+        # add event to producer
+        Rails.logger.debug('Finding producer')
+        @producer = Producer.find_by(:_id => params[:producer_id])
+        Rails.logger.debug(@producer)
+        @producer.event_ids << @event._id
+        @producer.save
+        Rails.logger.debug(@event)
+        
+        # add event to client - due to MANY:MANY relationship
         
         # add event to form
+        Rails.logger.debug('Finding forms')
         @form = Form.find_by(:_id => params[:form_id])
-        @form.event_ids << @event._id.to_str
+        @form.event_ids << @event._id
         @form.save
         
         #render
@@ -107,16 +110,15 @@ class EventsController < ApplicationController
     
     event = get_event(eventId)
     form = get_form(event.form_id)
-    slides = get_slides(eventId)
-    
+      
     data = JSON.parse(form.data)
     data["id"] = eventId
+    data["title"] = event.title
+    data["description"] = event.description
     
-    slides.each do |slide|
-      if slide.submission.talent_id.to_str.casecmp? session[:userId]
-        data["formData"] = JSON.parse(slide.submission.data)
-        break
-      end
+    if user_slide_exists?(eventId, session[:userId])
+      slide = get_slide(eventId, session[:userId])
+      data["formData"] = JSON.parse(slide.data)
     end
     
     @properties = {name: session[:userName], data: data}
@@ -139,7 +141,20 @@ class EventsController < ApplicationController
     return Form.find_by(:_id => formId)
   end
   
-  def get_slides eventId
-    return Slide.where(:event_id => eventId)
+  def get_slide eventId, userId
+    return Slide.find_by(:event_id => eventId, :talent_id => userId)
+  end
+  
+  def user_slide_exists? eventId, userId
+    if Slide.where(:event_id => eventId, :talent_id => userId).present?
+      return true
+    end
+    
+    return false
+  end
+  
+  # Only allow a list of trusted parameters through.
+  def event_params
+    params.fetch(:event, {})
   end
 end
