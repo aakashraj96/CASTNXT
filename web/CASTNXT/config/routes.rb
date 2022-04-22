@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   resources :forms
   resources :slides
-  resources :submissions
 
   get '/user', to: 'user#index'
   get '/admin', to: 'admin#index'
@@ -12,11 +11,6 @@ Rails.application.routes.draw do
     # TODO: update the except block based on actions configured
     resources :events, :except => [:update]
     resources :forms, :except => [:show, :edit, :update]
-  end
-  
-  scope :user do 
-    # TODO: update the except block based on actions configured
-    resources :events, :except => [:update] 
   end
   
   scope :user do 

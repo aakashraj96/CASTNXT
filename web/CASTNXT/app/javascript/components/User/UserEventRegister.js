@@ -55,6 +55,8 @@ class UserEventRegister extends Component {
         super(props)
         
         console.log(props)
+        console.log(props)
+        console.log("HELLO")
 
         this.state = {
             eventId: props.location.state.eventId,

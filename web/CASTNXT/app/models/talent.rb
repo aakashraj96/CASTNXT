@@ -5,5 +5,5 @@ class Talent
   field :name, type: String
   field :email, type: String
   
-  has_many :submissions
+  has_many :slides
 end

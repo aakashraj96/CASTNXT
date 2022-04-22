@@ -17,6 +17,8 @@ class Main extends Component {
     constructor(props) {
         super(props)
         
+        console.log("In main")
+        
         this.state = {
             
         }
@@ -28,13 +30,12 @@ class Main extends Component {
           <div className="overflow-auto" style={{ "paddingTop": "1%" }}>
             <Router>
               <Switch>
-                <Route exact path="/" render= {() => <Homepage />} />
                 <Route exact path="/user/events/*" render= {() => <UserEventRegister />} />
                 <Route exact path="/user" render= {() => <UserHomepage />} />
-                <Route exact path="/admin" render= {() => <AdminHomepage />} />
                 <Route exact path="/admin/events/new" render= {() => <AdminCreateEvent />} />
+                <Route exact path="/admin" render= {() => <AdminHomepage />} />
                 <Route exact path="/client" render= {() => <ClientHomepage />} />
-                <Redirect from="/" to="/login" />
+                <Route exact path="/" render= {() => <Homepage />} />
               </Switch>
             </Router>
           </div>

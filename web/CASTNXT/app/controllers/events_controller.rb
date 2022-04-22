@@ -43,7 +43,7 @@ class EventsController < ApplicationController
     @event = Event.new
     clientsInfo = []
     formIds = []
-    clients = Clients.all.to_a
+    clients = Client.all.to_a
     clients.each do |client|
       data = {
         id: client._id,
@@ -105,7 +105,8 @@ class EventsController < ApplicationController
       return
     end
     
-    form = get_form(eventId)
+    event = get_event(eventId)
+    form = get_form(event.form_id)
     slides = get_slides(eventId)
     
     data = JSON.parse(form.data)
@@ -122,7 +123,7 @@ class EventsController < ApplicationController
   end
   
   def unknown_event? eventId
-    if Form.where(:event_id => eventId).blank?
+    if Event.where(:_id => eventId).blank?
       render :file => "#{Rails.root}/public/404.html",  layout: false, status: :not_found
       return true
     else
@@ -130,8 +131,12 @@ class EventsController < ApplicationController
     end
   end
   
-  def get_form eventId
-    return Form.find_by(:event_id => eventId)
+  def get_event eventId
+    return Event.find_by(:_id => eventId)
+  end
+  
+  def get_form formId
+    return Form.find_by(:_id => formId)
   end
   
   def get_slides eventId
