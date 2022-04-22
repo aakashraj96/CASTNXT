@@ -67,7 +67,7 @@ class AdminHomepage extends Component {
                         <div className="row">
                             <div style={{marginBottom: 20}}>
                                 <Link to={{
-                                    pathname: "admin/create-event"
+                                    pathname: "/admin/events/new"
                                 }}>
                                     <Button variant="contained">Create New Event</Button>
                                 </Link>
