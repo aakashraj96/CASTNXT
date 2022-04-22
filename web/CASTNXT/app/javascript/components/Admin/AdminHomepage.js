@@ -64,11 +64,7 @@ class AdminHomepage extends Component {
                         </div>
                         <div className="row">
                             <div style={{marginBottom: 20}}>
-                                <Link to={{
-                                    pathname: "/admin/events/new"
-                                }}>
-                                    <Button variant="contained">Create New Event</Button>
-                                </Link>
+                                <Button variant="contained" onClick={this.createEventRedirection}>Create New Event</Button>
                             </div>
                         </div>
                         <div className="row">

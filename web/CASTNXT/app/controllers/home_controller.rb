@@ -15,7 +15,7 @@ class HomeController < ApplicationController
       session[:userType] = currentUser.user_type
       session[:userName] = currentUser.name
       session[:userId] = currentUser._id.to_str
-      render json: {redirect_path: get_redirect_path}, status: 201
+      render json: {redirect_path: get_redirect_path, userId: currentUser._id.to_str}, status: 201
     else
       render json: {comment: "Email already exists!"}, status: 400
     end
@@ -29,7 +29,7 @@ class HomeController < ApplicationController
       session[:userType] = currentUser.user_type
       session[:userName] = currentUser.name
       session[:userId] = currentUser._id.to_str
-      render json: {redirect_path: get_redirect_path}, status: 200
+      render json: {redirect_path: get_redirect_path, userId: currentUser._id.to_str}, status: 200
     else
       render json: {comment: "User not found!"}, status: 400
     end

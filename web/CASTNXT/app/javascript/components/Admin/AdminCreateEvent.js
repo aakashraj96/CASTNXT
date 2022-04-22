@@ -155,12 +155,13 @@ class AdminCreateEvent extends Component {
             selectedClients: [],
             schema: '{}',
             uischema: '{}',
-            formData: {},
             title: '',
             description: '',
             formIds: [],
             clients: [],
-            formData: null
+            formData: null,
+            newFormData: {},
+            newFormId:''
         }
     }
     
@@ -175,7 +176,7 @@ class AdminCreateEvent extends Component {
       this.setState((prevState) => {
           return {
               ...prevState,
-              formData: newFormData.formData
+              newFormData: newFormData.formData
           }
       })
     }
@@ -218,7 +219,8 @@ class AdminCreateEvent extends Component {
     
     onFormLoadClick = () => {
       console.log('Selected form to load: ', this.state.selectedFormNo)
-      axios.get(`/admin/form/${this.state.selectedFormNo}`)
+      const producerId = sessionStorage.getItem('userId')
+      axios.get(`/admin/forms`)
             .then((res) => {
               console.log("Form call success", res)
                 this.setState({
@@ -233,23 +235,50 @@ class AdminCreateEvent extends Component {
             })
     }
     
-    componentDidMount() {
-      console.log("Properties: ", properties)
-      axios.get("/admin/event/new")
+    onCreateEventClick = () => {
+      const producerId = sessionStorage.getItem('userId')
+      axios.post(`/admin/forms`, {
+        data:JSON.stringify({
+          schema: this.state.schema,
+          uischema: this.state.schema
+        }),
+        producer_id: producerId
+      })
             .then((res) => {
-              console.log("Did mount success", res)
-                this.setState({
-                    clients: properties.clients,
-                    formIds: properties.formIds
-                })
+              console.log("Form call success", res)
+              this.setState((prevState) => {
+                return {
+                  ...prevState,
+                  newFormId: res.data.formId
+                }
+              })
+              return axios.post(`/admin/events`, {
+                producer_id: producerId,
+                client_ids: this.state.clients.map(client => client.id),
+                form_id: res.data.formId,
+                title: this.state.title,
+                description: this.state.description,
+                status: 'ACCEPTING'
+              })
+              
+            })
+            .then((res) => {
+              console.log("Response from create event call", res.data)
             })
             .catch((err) => {
-              console.log("Did mount fail")
-                this.setState({
-                    clients: mockClients,
-                    formIds: mockFormIds
-                })
+              console.log("Form call fail", err)
             })
+    }
+    
+    componentDidMount() {
+      console.log("Properties: ", properties)
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          clients: properties.clientsInfo.map(client => ({id: client.id["$oid"], name: client.name})),
+          formIds: properties.formIds
+        }
+      })
     }
 
     render() {
@@ -349,10 +378,10 @@ class AdminCreateEvent extends Component {
                             onSchemaChange={this.onSchemaChange}
                             onUISchemaChange={this.onUISchemaChange}
                             onFormDataChange={this.onFormDataChange}
-                            formData={this.state.formData}
+                            formData={this.state.newFormData}
                           />
                         </TabPanel>
-                        <Button variant="contained">Create Event</Button>
+                        <Button variant="contained" onClick={this.onCreateEventClick}>Create Event</Button>
                     </div>
                 </div>
             </div>

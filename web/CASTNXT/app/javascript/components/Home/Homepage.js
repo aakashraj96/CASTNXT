@@ -94,6 +94,7 @@ class Homepage extends Component {
                 type: role
             })
             .then((res) => {
+                sessionStorage.setItem('userId', res.data.userId);
                 window.location.href = res.data.redirect_path;
             })
             .catch((err) => {
@@ -117,7 +118,7 @@ class Homepage extends Component {
                 this.setState({
                     loginError: false
                 })
-                
+                sessionStorage.setItem('userId', res.data.userId);
                 window.location.href = res.data.redirect_path;
             })
             .catch((err) => {
