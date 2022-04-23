@@ -4,11 +4,16 @@
       languages:
       - ruby
 exclude_patterns:
-  - .bundle/
-  - spec/**/*
-  - benchmarks/**/*
-  - node_modules/
-  - bin/
-  - coverage/
-  - public/
-  - javascript/
+  - ".rubocop*.yml"
+  - "spec/"
+  - "node_modules/"
+  - "!spec/support/helpers"
+  - "config/"
+  - "db/"
+  - "spec/"
+  - "vendor/"
+  - "coverage/"
+  - "bin/"
+  - ".idea/"
+  - "Guardfile"
+  - "public/packs/js/"
