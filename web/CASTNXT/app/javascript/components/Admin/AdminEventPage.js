@@ -34,19 +34,19 @@ class AdminEventPage extends Component {
     }
     
     getEvents() {
-        axios.get("/client/events")
-            .then((res) => {
-                this.setState({
-                    tableData: res.data.tableData
-                })
-            })
-            .catch((err) => {
-                if (err.response.status == 403) {
-                    window.location.href = err.response.data.redirect_path;
-                } else {
-                    console.log("Unable to contact server.")
-                }
-            })
+        // axios.get("/client/events")
+        //     .then((res) => {
+        //         this.setState({
+        //             tableData: res.data.tableData
+        //         })
+        //     })
+        //     .catch((err) => {
+        //         if (err.response.status == 403) {
+        //             window.location.href = err.response.data.redirect_path;
+        //         } else {
+        //             console.log("Unable to contact server.")
+        //         }
+        //     })
     }
     
     handleTabChange = (e, newValue) => {
