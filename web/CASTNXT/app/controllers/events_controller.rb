@@ -89,7 +89,8 @@ class EventsController < ApplicationController
         @form.save
         
         #render
-        render :show, status: 201, location: @event
+        # render :show, status: 201, location: @event
+        render json: {redirect_path: '/admin'}, status: 201
       else
         render json: @event.errors, status: 400
       end

@@ -7,6 +7,12 @@ class FormsController < ApplicationController
 
   # GET /forms/1 or /forms/1.json
   def show
+    form =  Form.find_by(:_id => params["id"])
+    formData = {
+        id: form._id.to_str,
+        data: form.data
+      }
+    render json: {formData:  formData}, status: 201
   end
 
   # GET /forms/new

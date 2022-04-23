@@ -23,100 +23,6 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import './Admin.css';
 
-const mockFormData = {1: {"schema": {
-    "type": "object",
-    "properties": {
-        "name": {
-            "title": "name",
-            "type": "string"
-        },
-        "potrait": {
-            "title": "potrait",
-            "type": "string"
-        }
-    },
-    "dependencies": {},
-    "required": []
-},
-  "uiSchema": {
-    "potrait": {
-        "ui:widget": "file"
-    },
-    "ui:order": [
-        "name",
-        "potrait"
-    ]
-}
-}, 2: {"schema": {
-    "type": "object",
-    "properties": {
-        "name": {
-            "title": "name",
-            "type": "string"
-        },
-        "Height": {
-            "title": "Height",
-            "type": "string"
-        },
-        "Weight": {
-            "title": "Weight",
-            "type": "string"
-        }
-    },
-    "dependencies": {},
-    "required": []
-},
-  "uiSchema": {
-    "potrait": {
-        "ui:widget": "file"
-    },
-    "ui:order": [
-        "name",
-        "Height",
-        "Weight"
-    ]
-}
-},
-3: {"schema": {
-    "type": "object",
-    "properties": {
-        "name": {
-            "title": "name",
-            "type": "string"
-        },
-        "Height": {
-            "title": "Height",
-            "type": "string"
-        }
-    },
-    "dependencies": {},
-    "required": []
-},
-  "uiSchema": {
-    "potrait": {
-        "ui:widget": "file"
-    },
-    "ui:order": [
-        "name",
-        "Height"
-    ]
-}
-}
-}
-
-const mockClients = [{
-  id: 1,
-  name: 'client1@gmail.com'
-}, {
-  id: 2,
-  name: 'client2@gmail.com'
-}, {
-  id: 3,
-  name: 'client3@gmail.com'
-}]
-
-const mockFormIds = [1,2,3]
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -218,20 +124,18 @@ class AdminCreateEvent extends Component {
     }
     
     onFormLoadClick = () => {
-      console.log('Selected form to load: ', this.state.selectedFormNo)
       const producerId = sessionStorage.getItem('userId')
-      axios.get(`/admin/forms`)
+      axios.get(`/admin/forms/${this.state.selectedFormNo}`)
             .then((res) => {
-              console.log("Form call success", res)
+              let parsedData = JSON.parse(res.data.formData.data)
                 this.setState({
-                    formData: properties.formData
+                    formData: parsedData,
+                    schema: JSON.stringify(parsedData['schema']),
+                    uischema: JSON.stringify(parsedData['uischema'])
                 })
             })
             .catch((err) => {
-              console.log("Form call fail")
-                this.setState({
-                    formData: mockFormData[this.state.selectedFormNo]
-                })
+              console.log("Form call fail", err)
             })
     }
     
@@ -239,8 +143,8 @@ class AdminCreateEvent extends Component {
       const producerId = sessionStorage.getItem('userId')
       axios.post(`/admin/forms`, {
         data:JSON.stringify({
-          schema: this.state.schema,
-          uischema: this.state.schema
+          schema: JSON.parse(this.state.schema),
+          uischema: JSON.parse(this.state.uischema)
         }),
         producer_id: producerId
       })
@@ -264,6 +168,7 @@ class AdminCreateEvent extends Component {
             })
             .then((res) => {
               console.log("Response from create event call", res.data)
+              window.location.href = res.data.redirect_path;
             })
             .catch((err) => {
               console.log("Form call fail", err)
@@ -271,7 +176,6 @@ class AdminCreateEvent extends Component {
     }
     
     componentDidMount() {
-      console.log("Properties: ", properties)
       this.setState((prevState) => {
         return {
           ...prevState,
