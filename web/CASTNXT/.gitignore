@@ -36,3 +36,4 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/home/ec2-user/environment/CASTNXT/web/CASTNXT/app/javascript/components/Admin/data.js

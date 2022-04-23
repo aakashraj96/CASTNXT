@@ -1,30 +1,44 @@
 Rails.application.routes.draw do
 
-  # Latest End points
+  resources :forms
+  resources :slides
+
+  get '/user', to: 'user#index'
+  get '/admin', to: 'admin#index'
+  get '/client', to: 'client#index'
+  
+  scope :admin do 
+    # TODO: update the except block based on actions configured
+    resources :events, :except => [:update]
+    resources :forms, :except => [:edit, :update]
+  end
+  
+  scope :user do 
+    # TODO: update the except block based on actions configured
+    resources :events do
+      resources :slides
+    end
+  end
+  
+  # resources :events
+  get '/logout', to: 'application#logout'
+  
   root 'home#index'
+  match '/home/login', :controller => 'home', :action => 'login', :via => :post
+  match '/home/signup', :controller => 'home', :action => 'signup', :via => :post
   
-  match '/home/login', :controller => 'home', :action => 'index', :via => :post
-  match '/home/signup', :controller => 'home', :action => 'create', :via => :post
+  get '/user', to: 'user#index'
+  match '/user/events', :controller => 'user', :action => 'events', :via => :get
   
-  get '/user', to: 'home#index', as: 'user'
-  get '/admin', to: 'home#index', as: 'admin'
+  get '/admin', to: 'admin#index'
+  match '/admin/events', :controller => 'admin', :action => 'events', :via => :get
+  match '/admin/create-event', :controller => 'admin', :action => 'create_event', :via => :get
+  match '/admin/create-master-stack', :controller => 'admin', :action => 'index', :via => :get
+  match '/admin/create-client-stack', :controller => 'admin', :action => 'index', :via => :get
+  match '/admin/event/:id', :controller => 'admin', :action => 'index', :via => :get
   
-  # get '/login', to: 'home#index', as: 'index'
-  # get '/sign_up', to: 'home#create_user', as: 'create_user'
+  get '/client', to: 'client#index'
+  match '/client/events', :controller => 'client', :action => 'events', :via => :get
+  match '/client/event/:id', :controller => 'client', :action => 'index', :via => :get
   
-  # Old End points
-  # get '/:id/preview', to: 'gforms#preview', as: 'preview'
-  # get '/:id/edit_form', to: 'gforms#edit_form', as: 'edit_form'
-  # get '/:id/view_responses', to: 'gforms#view_responses', as: 'view_responses'
-  
-  # resources :gforms
-  #get 'users/profile'
-  #get 'users/designers'
-  #get 'users/admin'
-  
-  # get '/:id/profile', to: 'users#profile', as: 'user_profile'
-  # get '/:id/designers', to: 'users#designers', as: 'user_designer'
-  # get '/:id/admin', to: 'users#admin', as: 'user_admin'
-  # map '/' to be a redirect to '/movies'
-  #root :to => redirect('/users/new')
 end
