@@ -14,10 +14,12 @@ import axios from 'axios';
 class UserHomepage extends Component {
     constructor(props) {
         super(props)
+        
+        console.log(properties)
 
         this.state = {
-            acceptingTableData: properties.acceptingTableData,
-            submittedTableData: properties.submittedTableData,
+            acceptingTableData: properties.acceptingTableData !== undefined ? properties.acceptingTableData : [],
+            submittedTableData: properties.submittedTableData !== undefined ? properties.submittedTableData : [],
             tabValue: 0
         }
     }
@@ -44,7 +46,7 @@ class UserHomepage extends Component {
             acceptingTableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell>
+                        <TableCell align="center">
                             <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                         </TableCell>
                     </TableRow>
@@ -71,10 +73,10 @@ class UserHomepage extends Component {
                 if (event.accepting) {
                     rows.push(
                         <TableRow key={i}>
-                            <TableCell>
+                            <TableCell align="center">
                                 <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                             </TableCell>
-                            <TableCell>
+                            <TableCell align="center">
                                 {event.status}
                             </TableCell>
                         </TableRow>
@@ -123,7 +125,7 @@ class UserHomepage extends Component {
                                         <Table aria-label="simple table">
                                             <TableHead style={{ backgroundColor: '#3498DB' }}>
                                                 <TableRow>
-                                                    <TableCell align="center">Event</TableCell>
+                                                    <TableCell align="center" style={{fontSize: '12pt'}}>Events</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -138,8 +140,8 @@ class UserHomepage extends Component {
                                         <Table aria-label="simple table">
                                             <TableHead style={{ backgroundColor: '#3498DB' }}>
                                                 <TableRow>
-                                                    <TableCell align="center">Event</TableCell>
-                                                    <TableCell align="center">Status</TableCell>
+                                                    <TableCell align="center" style={{fontSize: '12pt'}}>Event</TableCell>
+                                                    <TableCell align="center" style={{fontSize: '12pt'}}>Status</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>

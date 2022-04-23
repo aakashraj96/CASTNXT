@@ -9,20 +9,21 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 class AdminHomepage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            tableData: properties.tableData
+            tableData: properties.tableData !== undefined ? properties.tableData : []
         }
     }
     
-    renderEventList() {
+    renderEventList = () => {
         const { tableData } = this.state
         let rows = []
+        
         if (!tableData.length) {
             rows.push(
                  <TableRow key={0}>
@@ -35,8 +36,8 @@ class AdminHomepage extends Component {
             tableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell>
-                            <b><a href={"/admin/events/" + event.id}>{event.title}</a></b>
+                        <TableCell align="center" onClick={() => {window.location.href="/admin/event/"+event.id}}>
+                            <b><a href={"/admin/event/"+event.id}>{event.title}</a></b>
                         </TableCell>
                         <TableCell>{event.status}</TableCell>
                     </TableRow>
@@ -47,7 +48,7 @@ class AdminHomepage extends Component {
     }
     
     createEventRedirection = () => {
-        window.location.href = 'admin/events/new'
+        window.location.href = '/admin/events/new'
     }
 
     render() {

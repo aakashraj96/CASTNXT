@@ -12,14 +12,19 @@ import axios from 'axios';
 class ClientHomepage extends Component {
     constructor(props) {
         super(props)
-
+        
         this.state = {
-            tableData: properties.tableData
+            tableData: properties.tableData !== undefined ? properties.tableData : []
         }
+    }
+    
+    componentDidMount() {
+        
     }
     
     renderEventList() {
         const { tableData } = this.state
+        
         let rows = []
         if (!tableData.length) {
             rows.push(
@@ -33,8 +38,8 @@ class ClientHomepage extends Component {
             tableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell>
-                            <b><a href={"/client/events/" + event.id}>{event.title}</a></b>
+                        <TableCell align="center" onClick={() => {window.location.href="/client/event/"+event.id}}>
+                            <b><a href={"/client/event/"+event.id}>{event.title}</a></b>
                         </TableCell>
                     </TableRow>
                 )
