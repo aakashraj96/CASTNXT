@@ -209,7 +209,7 @@ class AdminCreateEvent extends Component {
                         <p>Step 1</p>
                         <div className="input-fields">
                           <TextField id="outlined-basic" label="Event title" variant="outlined" onChange={this.onTitleChange} value={this.state.title} />
-                          <TextField id="outlined-basic" label="Event description" variant="outlined" onChange={this.onDescriptionChange} value={this.state.description}/>
+                          <TextField id="outlined-basic" label="Event description" variant="outlined" onChange={this.onDescriptionChange} value={this.state.description} style={{marginTop: '20px', marginBottom: '20px'}}/>
                         </div>
                         <p>Step 2</p>
                         <FormControl fullWidth>
