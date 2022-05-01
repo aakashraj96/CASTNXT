@@ -36,8 +36,8 @@ class AdminHomepage extends Component {
             tableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell align="center" onClick={() => {window.location.href="/admin/event/"+event.id}}>
-                            <b><a href={"/admin/event/"+event.id}>{event.title}</a></b>
+                        <TableCell align="center" onClick={() => {window.location.href="/admin/events/"+event.id}}>
+                            <b><a href={"/admin/events/"+event.id}>{event.title}</a></b>
                         </TableCell>
                         <TableCell>{event.status}</TableCell>
                     </TableRow>
@@ -61,7 +61,7 @@ class AdminHomepage extends Component {
                 <div>
                     <div className="container user-events">
                         <div className="row">
-                            <h1> FashioNXT Events </h1>
+                            <h2> FashioNXT Events </h2>
                         </div>
                         <div className="row">
                             <div style={{marginBottom: 20}}>

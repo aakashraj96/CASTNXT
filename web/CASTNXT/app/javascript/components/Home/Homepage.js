@@ -141,7 +141,7 @@ class Homepage extends Component {
             <div>
                 <div className="container">
                     <div style={imageStyle} className='centered'>
-                        <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '300px', height: '30px' }} />
+                        <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '300px' }} />
                     </div>
                     <div className="row" style={{ color: 'white' }}>
                         <div className="col-md-6 offset-md-3 login-box">
@@ -170,40 +170,39 @@ class Homepage extends Component {
                             }
 
                             {this.state.tabValue === 1 &&
-                                <div className="container login-background" style={{overflowY: 'auto'}}>
+                                <div className="login-background" style={{overflowY: 'auto'}}>
                                     <FormControl style={{ textAlign: 'center', color: 'black' }}>
                                         <FormLabel>Welcome to CastNXT! Please select your role</FormLabel>
-                                        <div>
+                                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                             <RadioGroup
                                                 row
                                                 name="role"
                                                 aria-labelledby="demo-row-radio-buttons-group-label"
                                                 defaultValue="user"
                                                 onChange={this.handleChange}
-                                                style={{textAlign: 'center'}}
                                             >
                                                 <FormControlLabel value="USER" control={<Radio />} label="User" />
                                                 <FormControlLabel value="ADMIN" control={<Radio />} label="Admin" />
                                                 <FormControlLabel value="CLIENT" control={<Radio />} label="Client" />
                                             </RadioGroup>
                                         </div>
-                                        <br />
-                                        <TextField size="small" focused name="name" type="text" label="Name" value={this.state.name} 
-                                            onChange={this.handleChange} /><br />
-                                            
-                                        <TextField size="small" focused name="email" type="email" label="Email" value={this.state.email} 
-                                            error={this.state.emailError} helperText={this.state.emailError ? "Enter a valid email address" : ""} 
-                                            onChange={this.handleChange} /><br />
-                                            
-                                        <TextField size="small" focused name="password" type="password" label="Password" value={this.state.password} 
-                                            error={this.state.passwordError} helperText={this.state.passwordError ? this.state.passwordErrorText : ""} 
-                                            onChange={this.handleChange} /><br />
-                                            
-                                        <TextField size="small" focused name="confirmPassword" type="password" label="Confirm Password" value={this.state.confirmPassword} 
-                                            error={this.state.passwordError} helperText={this.state.passwordError ? this.state.passwordErrorText : ""} 
-                                            onChange={this.handleChange} /><br />
                                     </FormControl>
-                                    <br />
+                                    <br /><br />
+                                    <TextField size="small" focused style={{ width: '60%' }} name="name" type="text" label="Name" value={this.state.name} 
+                                        onChange={this.handleChange} /><br /><br />
+                                        
+                                    <TextField size="small" focused style={{ width: '60%' }} name="email" type="email" label="Email" value={this.state.email} 
+                                        error={this.state.emailError} helperText={this.state.emailError ? "Enter a valid email address" : ""} 
+                                        onChange={this.handleChange} /><br /><br />
+                                            
+                                    <TextField size="small" focused style={{ width: '60%' }} name="password" type="password" label="Password" value={this.state.password} 
+                                        error={this.state.passwordError} helperText={this.state.passwordError ? this.state.passwordErrorText : ""} 
+                                        onChange={this.handleChange} /><br /><br />
+                                            
+                                    <TextField size="small" focused style={{ width: '60%' }} name="confirmPassword" type="password" label="Confirm Password" value={this.state.confirmPassword} 
+                                        error={this.state.passwordError} helperText={this.state.passwordError ? this.state.passwordErrorText : ""} 
+                                        onChange={this.handleChange} /><br /><br />
+                                    
                                     <Button className="sign-up-button" variant="contained" onClick={this.signUp}>Sign Up</Button>
                                     
                                     {this.state.signUpError &&

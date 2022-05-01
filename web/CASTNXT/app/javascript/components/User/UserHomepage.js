@@ -15,8 +15,6 @@ class UserHomepage extends Component {
     constructor(props) {
         super(props)
         
-        console.log(properties)
-
         this.state = {
             acceptingTableData: properties.acceptingTableData !== undefined ? properties.acceptingTableData : [],
             submittedTableData: properties.submittedTableData !== undefined ? properties.submittedTableData : [],
@@ -46,7 +44,7 @@ class UserHomepage extends Component {
             acceptingTableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell align="center">
+                        <TableCell align="center" onClick={() => {window.location.href="/user/events/"+event.id}}>
                             <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                         </TableCell>
                     </TableRow>
@@ -73,7 +71,7 @@ class UserHomepage extends Component {
                 if (event.accepting) {
                     rows.push(
                         <TableRow key={i}>
-                            <TableCell align="center">
+                            <TableCell align="center" onClick={() => {window.location.href="/user/events/"+event.id}}>
                                 <b><a href={"/user/events/" + event.id}>{event.title}</a></b>
                             </TableCell>
                             <TableCell align="center">
@@ -108,7 +106,7 @@ class UserHomepage extends Component {
                 <div>
                     <div className="container user-events">
                         <div className="row">
-                            <h1> FashioNXT Events </h1>
+                            <h2> FashioNXT Events </h2>
                         </div>
                         <div className="row">
                             <div className="col-md-6 offset-md-3">

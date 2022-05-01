@@ -37,6 +37,10 @@ class HomeController < ApplicationController
   
   private
   
+  def get_user email, password
+    return Auth.find_by(:email => email, :password => password)
+  end
+  
   def new_user? email
     if Auth.where(:email => email).blank?
       return true
@@ -53,18 +57,14 @@ class HomeController < ApplicationController
     return false
   end
   
-  def get_user email, password
-    return Auth.find_by(:email => email, :password => password)
-  end
-  
   def create_user params
     user = Auth.create(name:params[:name], email:params[:email], password:params[:password], user_type:params[:type])
-    if "ADMIN".casecmp? params[:userType]
+    if "ADMIN".casecmp? params[:type]
       Producer.create(_id:user._id.to_str, name:user.name, email:user.email)
-    elsif "CLIENT".casecmp? params[:userType]
+    elsif "CLIENT".casecmp? params[:type]
       Client.create(_id:user._id.to_str, name:user.name, email:user.email)
     else
-      User.create(_id:user._id.to_str, name:user.name, email:user.email)
+      Talent.create(_id:user._id.to_str, name:user.name, email:user.email)
     end
   end
 

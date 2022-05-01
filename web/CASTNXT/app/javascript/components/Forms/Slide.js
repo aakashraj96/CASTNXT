@@ -18,8 +18,7 @@ class Slide extends Component {
     let fieldsCopy = Object.assign({}, state.fields)
     let schemaCopy = Object.assign({}, props.schema)
     Object.keys(props.formData).forEach(key => {
-      if(props.formData[key].includes("data:image")) {
-        console.log("Image found",key);
+      if(props.formData && typeof props.formData[key] === 'string' && props.formData[key].includes("data:image")) {
         let fieldIndex = uiSchemaCopy['ui:order'].indexOf(key)
         let uiOrder = [
           ...uiSchemaCopy['ui:order'].slice(0, fieldIndex+1),
@@ -56,7 +55,8 @@ class Slide extends Component {
   }
   
   render() {
-    console.log('inside slide: ', this.state)
+    // schema and uiSchema are to be used from state and not props since image preview is being added in state
+    const { onFormDataChange, onSubmit, schema, uiSchema, ...restProps} = this.props
     return (
         <div className="container" style={{ backgroundColor: 'white', height: '100%'}}>
           <Form
@@ -65,6 +65,8 @@ class Slide extends Component {
               onChange={this.props.onFormDataChange}
               formData={this.state.formData}
               submitButtonMessage={"Submit"}
+              onSubmit={this.props.onSubmit}
+              {...restProps}
             />
         </div>
     );

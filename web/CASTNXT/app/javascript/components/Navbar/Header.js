@@ -40,7 +40,7 @@ export default function Header(props) {
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="menu">
                             {/* <MenuIcon /> */}
-                            <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '14vw', height: '3.5vh' }} />
+                            <img src={require('../../assets/images/logo.png')} alt="FASHIONXT" style={{ width: '200px' }} />
                         </IconButton>
                         <Typography variant="h6" className={classes.title}></Typography>
                         <Typography color="inherit" style={{marginRight: '1%'}}>Welcome, {properties.name}</Typography>
