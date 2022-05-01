@@ -42,7 +42,8 @@ class FormBuilderContainer extends Component {
             }}
             mods={
               {
-                customFormInputs
+                customFormInputs,
+                showFormHead: false,
               }
             }
           />

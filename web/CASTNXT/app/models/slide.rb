@@ -6,7 +6,6 @@ class Slide
   belongs_to :talent
   has_and_belongs_to_many :clients
   has_many :messages
-  has_many :media
   
   field :curated, type: Boolean
   field :data, type: String

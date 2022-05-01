@@ -13,6 +13,8 @@ class ClientHomepage extends Component {
     constructor(props) {
         super(props)
         
+        console.log(properties)
+        
         this.state = {
             tableData: properties.tableData !== undefined ? properties.tableData : []
         }
@@ -29,7 +31,7 @@ class ClientHomepage extends Component {
         if (!tableData.length) {
             rows.push(
                  <TableRow key={0}>
-                    <TableCell align="center">
+                    <TableCell colSpan={2} align="center">
                         No ongoing Events right now.
                     </TableCell>
                  </TableRow>
@@ -38,9 +40,10 @@ class ClientHomepage extends Component {
             tableData.map((event, i) => {
                 rows.push(
                     <TableRow key={i}>
-                        <TableCell align="center" onClick={() => {window.location.href="/client/event/"+event.id}}>
-                            <b><a href={"/client/event/"+event.id}>{event.title}</a></b>
+                        <TableCell align="center" onClick={() => {window.location.href="/client/events/"+event.id}}>
+                            <b><a href={"/client/events/"+event.id}>{event.title}</a></b>
                         </TableCell>
+                        <TableCell align="center">{event.status}</TableCell>
                     </TableRow>
                 )
             });
@@ -58,7 +61,7 @@ class ClientHomepage extends Component {
                 <div>
                     <div className="container user-events">
                         <div className="row">
-                            <h1> FashioNXT Events </h1>
+                            <h2> FashioNXT Events </h2>
                         </div>
                         <div className="row">
                             <div className="col-md-6 offset-md-3">
@@ -67,6 +70,7 @@ class ClientHomepage extends Component {
                                         <TableHead style={{ backgroundColor: '#3498DB' }}>
                                             <TableRow>
                                                 <TableCell align="center">Event</TableCell>
+                                                <TableCell align="center">Status</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>

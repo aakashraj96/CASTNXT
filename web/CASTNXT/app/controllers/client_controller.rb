@@ -11,7 +11,8 @@ class ClientController < ApplicationController
         
       object = {
         title: event.title,
-        id: event._id.to_str
+        id: event._id.to_str,
+        status: event.status
       }
         
       tableData << object

@@ -23,38 +23,20 @@ class ClientEventPage extends Component {
         super(props)
         
         console.log("Props", props)
+        console.log("properties", properties)
 
         this.state = {
+            properties: properties,
             tableData: [],
             tabValue: 0,
             redirect: "",
         }
     }
     
-    componentDidMount() {
-        this.getEvents()
-    }
-    
     handleTabChange = (e, newValue) => {
         this.setState({
             tabValue: newValue
         })
-    }
-    
-    getEvents() {
-        axios.get("/client/events")
-            .then((res) => {
-                this.setState({
-                    tableData: res.data.tableData
-                })
-            })
-            .catch((err) => {
-                if (err.response.status == 403) {
-                    window.location.href = err.response.data.redirect_path;
-                } else {
-                    console.log("Unable to contact server.")
-                }
-            })
     }
     
     back = () => {
@@ -72,7 +54,7 @@ class ClientEventPage extends Component {
                     <div className="user-events">
                         <h2> Event Title </h2>
                         
-                        <Button variant="outlined" style={{float: 'right', marginRight: '1%'}} onClick={this.back}>Back</Button>
+                        <Button variant="outlined" style={{float: 'right', marginRight: '1%'}} onClick={this.back}>Back to Homepage</Button>
                         
                         <div>
                             <Box sx={{ width: '100%' }}>
@@ -85,13 +67,13 @@ class ClientEventPage extends Component {
                               
                               {this.state.tabValue === 0 &&
                                   <div>
-                                    <ClientEventSummary />
+                                    <ClientEventSummary properties={this.state.properties} />
                                   </div>
                               }
                               
                               {this.state.tabValue === 1 &&
                                   <div>
-                                    <ClientEventFeedback />
+                                    <ClientEventFeedback properties={this.state.properties} />
                                   </div>
                               }
                              

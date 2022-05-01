@@ -18,7 +18,6 @@ class UserController < ApplicationController
       if user_slide_exists?(event._id.to_str, session[:userId])
         slide = get_slide(event._id.to_str, session[:userId])
         submittedFlag = 1
-        object["status"] = slide.submission_status
       end
       
       
@@ -29,6 +28,10 @@ class UserController < ApplicationController
       else
         if "ACCEPTING".casecmp? event.status
           object["accepting"] = true
+          object["status"] = "SUBMITTED"
+        else
+          object["accepting"] = false
+          object["status"] = event.status
         end
         
         submittedTableData << object

@@ -13,24 +13,22 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import FormBuilderContainer from '../Forms/FormBuilder.js'
 import Form from '@rjsf/core';
+import Slide from '../Forms/Slide';
 import TextField from '@mui/material/TextField';
-// import {curatedData, formSchema} from '../Admin/data';
 
 class ClientEventFeedback extends Component {
     constructor(props) {
         super(props)
+        
+        console.log(props)
 
         this.state = {
-            tableData: [],
-            tabValue: 0,
-            redirect: "",
-            schema: [],//formSchema.schema,
-            uischema: [],//formSchema.uischema,
-            formData: [],//formSchema.formData,
-            entries: [],//curatedData.entries,
-            curatedStack: [],
-            showStack: false,
-            client: '',
+            title: props.properties.data.title,
+            description: props.properties.data.description,
+            schema: props.properties.data.schema,
+            uischema: props.properties.data.uischema,
+            slides: props.properties.data.slides,
+            entries: [],
             page:0,
             rowsPerPage: 1,
             feedback: ''
@@ -38,15 +36,24 @@ class ClientEventFeedback extends Component {
     }
     
     componentDidMount() {
-        this.getEvents()
+        let schema = this.state.schema
+        let slides = this.state.slides
+        let entries = []
         
-        let entries = this.state.entries
+        schema['title'] = this.state.title
+        schema['description'] = this.state.description
         
-        entries = entries.filter(row => row['curated'] === true)
+        for(var key in slides) {
+        entries.push({
+          ...slides[key],
+          id: key,
+        }) 
+      }
         
-        this.setState({
-            entries: entries
-        })
+      this.setState({
+          entries: entries,
+          schema: schema
+      })
     }
     
     handleChange = (e) => {
@@ -61,59 +68,10 @@ class ClientEventFeedback extends Component {
       })
     };
     
-    handleChangeRowsPerPage = (event, num) => {
-      console.log(event.target.value)
+    handleChangeRowsPerPage = (event) => {
       this.setState({
         rowsPerPage: event.target.value
       })
-    }
-    
-    getEvents() {
-        axios.get("/client/events")
-            .then((res) => {
-                this.setState({
-                    tableData: res.data.tableData
-                })
-            })
-            .catch((err) => {
-                if (err.response.status == 403) {
-                    window.location.href = err.response.data.redirect_path;
-                } else {
-                    console.log("Unable to contact server.")
-                }
-            })
-    }
-    
-    renderEventList() {
-        const { tableData } = this.state
-        
-        tableData.push({
-            eventId: 1,
-            event: 'Fashion Show',
-            status: 'Registration Open'
-        })
-        
-        let rows = []
-        if (!tableData.length) {
-            rows.push(
-                 <TableRow key={0}>
-                    <TableCell align="center">
-                        No ongoing Events right now.
-                    </TableCell>
-                 </TableRow>
-            )
-        } else {
-            tableData.map((event, i) => {
-                rows.push(
-                    <TableRow key={i}>
-                        <TableCell align="center" onClick={() => {window.location.href="/client/event/"+event.eventId}}>
-                            <b><a href={"/client/event/"+event.eventId}>{event.event}</a></b>
-                        </TableCell>
-                    </TableRow>
-                )
-            });
-        } 
-        return rows;
     }
     
     handleFeedbackChange = (event, row) => {
@@ -134,48 +92,48 @@ class ClientEventFeedback extends Component {
                           <Table size="medium">
                             <TableBody>
                               {this.state.entries
-                                    .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                                    .map((row, index) => {
-                                      return(
-                                        <TableRow
-                                          key={row.id}
-                                          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
+                                  .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                                  .map((row, index) => {
+                                    return(
+                                      <TableRow
+                                        key={row.id}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                      >
 
-                                          <TableCell>
-                                            <Form
-                                              schema={this.state.schema}
-                                              uiSchema={this.state.uischema}
-                                              formData={row.formData}
-                                              children={true}
-                                              disabled
-                                            />
-                                            
-                                            <br />
-                                            
-                                             <TextField
-                                                value={this.state.feedback}
-                                                onChange={() => this.handleFeedbackChange(event, row)}
-                                                placeholder="Enter your feedback here"
-                                                name="feedback"
-                                                fullWidth
-                                                label="Feedback"
-                                                multiline
-                                                rows={4}
-                                            />
-                                            
-                                          </TableCell>
+                                        <TableCell>
+                                          <Slide
+                                            schema={this.state.schema}
+                                            uiSchema={this.state.uischema}
+                                            formData={row.formData}
+                                            children={true}
+                                            disabled
+                                          />
                                           
-                                        </TableRow>
-                                      )
-                                  })
+                                          <br />
+                                          
+                                          <TextField
+                                            value={this.state.feedback}
+                                            onChange={() => this.handleFeedbackChange(event, row)}
+                                            placeholder="Enter your feedback here"
+                                            name="feedback"
+                                            fullWidth
+                                            label="Feedback"
+                                            multiline
+                                            rows={4}
+                                          />
+                                          
+                                        </TableCell>
+                                        
+                                      </TableRow>
+                                    )
+                                })
                               }
                             </TableBody>
                             
                             <TableFooter>
                               <TableRow>
                                 <TablePagination
-                                  rowsPerPageOptions={[1, 2]}
+                                  rowsPerPageOptions={[1]}
                                   count={this.state.entries.length}
                                   rowsPerPage={this.state.rowsPerPage}
                                   page={this.state.page}

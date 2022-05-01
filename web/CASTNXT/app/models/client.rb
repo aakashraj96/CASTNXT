@@ -6,4 +6,5 @@ class Client
   field :email, type: String
   
   has_and_belongs_to_many :events
+  has_and_belongs_to_many :slides
 end

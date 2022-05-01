@@ -7,6 +7,5 @@
 .input-fields {
     display: flex;
     flex-direction: column;
-    height: 20vh;
     justify-content: space-around;
 }
