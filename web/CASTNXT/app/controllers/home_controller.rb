@@ -8,7 +8,11 @@ class HomeController < ApplicationController
   
   # POST /home/signup
   def signup
-    if new_user?(params[:email])
+    if new_user?(params[:email]) and defined? params[:adminAdd]
+      Rails.logger.debug("Admin Add new client")
+      create_user(params)
+      render json: {comment: "Succesfully added new client"}, status: 201
+    elsif new_user?(params[:email]) and !(defined? params[:adminAdd])
       create_user(params)
       currentUser = get_user(params[:email], params[:password])
       session[:userEmail] = currentUser.email

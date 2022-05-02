@@ -84,7 +84,7 @@ class Homepage extends Component {
             let name = this.state.name
             let email = this.state.email
             let password = this.state.password
-            let role = this.state.role
+            let role = 'user'
             
             //Make API call
             axios.post("/home/signup", {
@@ -172,20 +172,7 @@ class Homepage extends Component {
                             {this.state.tabValue === 1 &&
                                 <div className="login-background" style={{overflowY: 'auto'}}>
                                     <FormControl style={{ textAlign: 'center', color: 'black' }}>
-                                        <FormLabel>Welcome to CastNXT! Please select your role</FormLabel>
-                                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <RadioGroup
-                                                row
-                                                name="role"
-                                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                                defaultValue="user"
-                                                onChange={this.handleChange}
-                                            >
-                                                <FormControlLabel value="USER" control={<Radio />} label="User" />
-                                                <FormControlLabel value="ADMIN" control={<Radio />} label="Admin" />
-                                                <FormControlLabel value="CLIENT" control={<Radio />} label="Client" />
-                                            </RadioGroup>
-                                        </div>
+                                        <FormLabel>Welcome to CastNXT! Sign up by filling your details below</FormLabel>
                                     </FormControl>
                                     <br /><br />
                                     <TextField size="small" focused style={{ width: '60%' }} name="name" type="text" label="Name" value={this.state.name} 

@@ -10,6 +10,7 @@ import Homepage from '../components/Home/Homepage';
 import UserHomepage from '../components/User/UserHomepage';
 import UserEventRegister from '../components/User/UserEventRegister';
 import AdminHomepage from '../components/Admin/AdminHomepage';
+import AdminAddClient from '../components/Admin/AdminAddClient';
 import AdminCreateEvent from '../components/Admin/AdminCreateEvent';
 import AdminCreateStack from '../components/Admin/AdminCreateStack';
 import AdminCreateClientStack from '../components/Admin/AdminCreateClientStack';
@@ -34,6 +35,7 @@ class Main extends Component {
               <Switch>
                 <Route exact path="/user/events/*" render= {() => <UserEventRegister />} />
                 <Route exact path="/user" render= {() => <UserHomepage />} />
+                <Route exact path="/admin/add-client" render= {() => <AdminAddClient />} />
                 <Route exact path="/admin/events/new" render= {() => <AdminCreateEvent />} />
                 <Route exact path="/admin/create-event" render= {() => <AdminCreateEvent />} />
                 <Route exact path="/admin/events/*" render= {() => <AdminEventPage />} />

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   
   get '/admin', to: 'admin#index'
   match '/admin/events', :controller => 'admin', :action => 'events', :via => :get
+  match '/admin/add-client', :controller => 'admin', :action => 'index', :via => :get
   match '/admin/create-event', :controller => 'admin', :action => 'create_event', :via => :get
   match '/admin/create-master-stack', :controller => 'admin', :action => 'index', :via => :get
   match '/admin/create-client-stack', :controller => 'admin', :action => 'index', :via => :get

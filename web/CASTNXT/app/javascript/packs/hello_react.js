@@ -10,9 +10,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Main from './Main'
 
+document.title = "CASTNXT"
+
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Main name="React" />,
+    <Main name="CASTNXT" />,
     document.body.appendChild(document.createElement('div')),
   )
 })

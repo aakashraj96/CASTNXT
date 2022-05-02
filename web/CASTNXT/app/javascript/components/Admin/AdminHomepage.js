@@ -50,6 +50,10 @@ class AdminHomepage extends Component {
     createEventRedirection = () => {
         window.location.href = '/admin/events/new'
     }
+    
+    addClients = () => {
+        window.location.href = '/admin/add-client'
+    }
 
     render() {
         return(
@@ -65,7 +69,8 @@ class AdminHomepage extends Component {
                         </div>
                         <div className="row">
                             <div style={{marginBottom: 20}}>
-                                <Button variant="contained" onClick={this.createEventRedirection}>Create New Event</Button>
+                                <Button variant="contained" onClick={this.createEventRedirection}>Create New Event</Button>&nbsp;
+                                <Button variant="contained" onClick={this.addClients}>Add Clients</Button>
                             </div>
                         </div>
                         <div className="row">
