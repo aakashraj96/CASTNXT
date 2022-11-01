@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import { DataGrid } from '@material-ui/data-grid';
 
 
@@ -33,13 +33,12 @@ class AdminEventSummary extends Component {
     
     constructTableData = (eventTalent) => {
       let columns = [
-        {field: 'name', headerName: 'Name', minWidth: 150},
         {field: 'clients', headerName: 'Clients assigned', minWidth: 200}
       ]
       let rows = []
       let schema = this.props.properties.data.schema.properties
       Object.keys(schema).forEach(key => {
-        let existingColumn = columns.find(column => column.field == key)
+        let existingColumn = columns.find(column => column.field === key)
         if (!existingColumn) {
           columns.push({field: key, headerName: schema[key].title, minWidth: 150})
         }
@@ -47,7 +46,6 @@ class AdminEventSummary extends Component {
       eventTalent.forEach((talentData, index) => {
         let row = {}
         row['id'] = index + 1
-        row['name'] = talentData.name
         row['clients'] = this.findAssignedClients(talentData.id)
         columns.forEach((column) => {
           if(column.field !== 'name' && column.field !== 'clients') {
@@ -77,9 +75,9 @@ class AdminEventSummary extends Component {
                 formData: slides[key].formData
             })
         }
-        
         eventTalent = eventTalent.filter(row => row['curated'] === true)
         let [rows,columns] = this.constructTableData(eventTalent)
+        console.log(columns)
         this.setState({
             eventTalent: eventTalent,
             rows: rows,

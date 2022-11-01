@@ -12,11 +12,13 @@ import AdminCreateClientStack from "./AdminCreateClientStack";
 import AdminClientDecks from "./AdminClientDecks";
 import AdminEventSummary from "./AdminEventSummary";
 import AdminFinalizedCandidates from "./AdminFinalizedCandidates";
+import AdminCreateWithFilter from "./AdminCreateWithFilter";
 
 class AdminEventPage extends Component {
     constructor(props) {
         super(props)
         
+        //console.log(`Props: ${JSON.stringify(properties)}`)
         this.state = {
             title: properties.data.title,
             description: properties.data.description,
@@ -69,8 +71,11 @@ class AdminEventPage extends Component {
                               
                               {this.state.tabValue === 1 &&
                                   <div>
-                                    <AdminCreateStack properties={properties} />
+                                    <AdminCreateWithFilter properties={properties} />
                                   </div>
+                                  /*<div>
+                                    <AdminCreateStack properties={properties} />
+                                  </div>*/
                               }
                               
                               {this.state.tabValue === 2 &&

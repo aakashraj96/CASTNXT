@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.16.7",
-    "webpack-dev-server": "^3"
+    "webpack-dev-server": "^3",
+    "yarn": "^1.22.19"
   }
 }
